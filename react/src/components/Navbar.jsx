@@ -27,15 +27,15 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
-                        {Object.keys(NavbarItems).map(itemKey => (
-                        <li key={itemKey}>
-                            <Link to={NavbarItems[itemKey].route}>
-                            {NavbarItems[itemKey].label}
-                            </Link>
-                        </li>
-                        ))}
-                    </ul>
+                <ul className="menu menu-horizontal px-1">
+                    {Object.keys(NavbarItems).map(itemKey => (
+                    <li key={itemKey}>
+                        <Link to={NavbarItems[itemKey].route}>
+                        {NavbarItems[itemKey].label}
+                        </Link>
+                    </li>
+                    ))}
+                </ul>
                 </div>
                 <div className="navbar-end">
                     <a className="btn">Button</a>
