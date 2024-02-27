@@ -16,7 +16,7 @@ const MenuTable = () => {
                         <tr>
                             <th>
                             <label>
-                                <input type="checkbox" className="checkbox" />
+                                1
                             </label>
                             </th>
                             <td>
@@ -28,7 +28,7 @@ const MenuTable = () => {
                                 </div>
                                 <div>
                                     <div className="font-bold">Product Name</div>
-                                    <div className="text-sm opacity-50">Available</div>
+                                    <div className="text-sm opacity-50">Description</div>
                                 </div>
                             </div>
                             </td>

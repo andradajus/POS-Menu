@@ -1,5 +1,5 @@
 import MenuTable from "./menu/MenuTable"
-
+import MenuLogs from "./menu/MenuLogs"
 const Menu = () => {
     return (
         <>
@@ -7,9 +7,8 @@ const Menu = () => {
                 <div className="col-span-4 lg:row-span-10 md:row-span-10 sm:row-span-8 ">
                     <MenuTable />
                 </div>
-
-                <div className="col-span-2 lg:row-span-10 md:row-span-10 lg:col-start-5 md:col-start-5 sm:row-span-8 bg-blue-500">
-                2
+                <div className="col-span-2 lg:row-span-10 md:row-span-10 lg:col-start-5 md:col-start-5 sm:row-span-8 ">
+                    <MenuLogs />
                 </div>
             </div>
         </>
