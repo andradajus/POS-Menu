@@ -1,6 +1,32 @@
+import InputModal from "../../components/InputModal"
+import { AddFoodInputs } from "../../constants/inputs"
 const MenuTable = () => {
+    const inputs = AddFoodInputs
+    const handleAddProduct = () => {
+        const modal = document.getElementById('addProductModal');
+        if (modal) {
+            modal.showModal();
+        }
+    }
+
+    const handleFormSubmit = (formData) => {
+        console.log('Form submitted with data:', formData);
+    };
+
+    console.log("inputs", inputs)
+
     return (
         <>
+            <div className="flex justify-between">
+                <button
+                className="btn btn-primary m-3"
+                onClick={handleAddProduct}
+                >
+                Add Product
+                </button>
+                <div className="flex align-middl text-2xl mt-4 font-bold">Product Table</div>
+                <div></div>
+            </div>
             <div className="overflow-x-auto">
                 <table className="table">
                     <thead>
@@ -39,6 +65,15 @@ const MenuTable = () => {
                     </tbody>
                 </table>
             </div>
+
+            <dialog id="addProductModal" className="modal">
+                <div className="modal-box">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
+                    </form>
+                    <InputModal onSubmit={handleFormSubmit} inputs={inputs} />
+                </div>
+            </dialog>
         </>
     )
 }
