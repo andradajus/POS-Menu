@@ -3,7 +3,6 @@ import { AddFoodInputs } from "../../constants/inputs";
 import { useState, useEffect } from "react";
 import { getProducts, addProducts } from "../../lib/firebaseutils"
 const MenuTable = () => {
-  const [editableCell, setEditableCell] = useState(null);
   const [products, setProducts] = useState([])
 
   const handleAddProduct = () => {
@@ -12,41 +11,28 @@ const MenuTable = () => {
       modal.showModal();
     }
   };
-
-  const handleEditClick = (index) => {
-    setEditableCell(index);
-  };
-
-  const handleInputChange = (event, index, field) => {
-    const updatedProducts = [...products];
-    updatedProducts[index][field] = event.target.value;
-    setProducts(updatedProducts);
-  };
-
-  const handleInputBlur = () => {
-    setEditableCell(null);
-  };
-
   const handleFormSubmit = async(formData) => {
     try {
       const data = await addProducts(formData);
       console.log("product data", data)
+      fetchProductData()
+      document.getElementById("addProductModal").close()
     }
     catch (error) {
       console.error("Error adding product:", error);
     }
   };
+  const fetchProductData = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data)
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data)
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-    fetchData();
+    fetchProductData();
   }, []);
 
   console.log("products", products)
@@ -62,6 +48,7 @@ const MenuTable = () => {
         </div>
         <div></div>
       </div>
+
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
@@ -76,54 +63,23 @@ const MenuTable = () => {
           </thead>
           <tbody>
             {products?.map((product, index) => (
-              <tr key={index}>
+              <tr key={product.id}>
                 <th>
                   <label>{index + 1}</label>
                 </th>
                 <td>
-                  {editableCell === index ? (
-                    <>
-                      <div className="avatar"></div>
-                      <input
-                        type="text"
-                        value={product.name}
-                        onChange={(e) => handleInputChange(e, index, "name")}
-                        onBlur={handleInputBlur}
+                  <input
+                  className="font-bold flex" />
+                    <div className="mask mask-squircle w-12 h-12">
+                      <img
+                        src="/tailwind-css-component-profile-2@56w.png"
+                        alt="IMG"
                       />
-                    </>
-                  ) : (
-                    <div
-                      className="font-bold flex "
-                      onClick={() => handleEditClick(index)}
-                    >
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src="/tailwind-css-component-profile-2@56w.png"
-                          alt="IMG"
-                        />
-                      </div>
-                      {product.name}
                     </div>
-                  )}
+                    {product.name}
                 </td>
                 <td>
-                  {editableCell === index ? (
-                    <input
-                      type="text"
-                      value={product.description}
-                      onChange={(e) =>
-                        handleInputChange(e, index, "description")
-                      }
-                      onBlur={handleInputBlur}
-                    />
-                  ) : (
-                    <div
-                      className="font-bold"
-                      onClick={() => handleEditClick(index)}
-                    >
-                      {product.description}
-                    </div>
-                  )}
+                  <div className="font-bold">{product.description}</div>
                 </td>
                 <td>{product.category}</td>
                 <td>{product.price}</td>
