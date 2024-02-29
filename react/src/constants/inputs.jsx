@@ -44,3 +44,21 @@ export const AddFoodInputs = [
     required: "Required",
   }
 ];
+
+export const AddSizeInputs = [
+  {
+    label: "Size",
+    value: "size",
+    type: "text",
+    required: "Required",
+  }
+]
+
+export const AddCategoryInputs = [
+  {
+    label: "Category",
+    value: "category",
+    type: "text",
+    required: "Required",
+  }
+]

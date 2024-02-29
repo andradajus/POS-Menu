@@ -1,18 +1,11 @@
 import InputModal from "../../components/InputModal";
 import { AddFoodInputs } from "../../constants/inputs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getProducts } from "../../lib/firebaseutils"
 const MenuTable = () => {
   const [editableCell, setEditableCell] = useState(null);
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Product Name",
-      description: "Description",
-      category: "Category",
-      price: "Price",
-      stock: "Stock",
-    },
-  ]);
+  const [products, setProducts] = useState([])
+
   const handleAddProduct = () => {
     const modal = document.getElementById("addProductModal");
     if (modal) {
@@ -38,6 +31,13 @@ const MenuTable = () => {
     console.log("Form submitted with data:", formData);
   };
 
+  useEffect(() => {
+    const data = getProducts()
+    setProducts(data)
+  }, []);
+
+  console.log("products", products)
+
   return (
     <>
       <div className="flex justify-between">
@@ -62,7 +62,7 @@ const MenuTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
+            {/* {products?.map((product, index) => (
               <tr key={index}>
                 <th>
                   <label>{product.id}</label>
@@ -116,7 +116,7 @@ const MenuTable = () => {
                 <td>{product.price}</td>
                 <td>{product.stock}</td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
       </div>
