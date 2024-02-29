@@ -38,4 +38,9 @@ export const AddFoodInputs = [
     value: "description",
     required: "Required",
   },
+  {
+    label: "Size",
+    value: "size",
+    required: "Required",
+  }
 ];
