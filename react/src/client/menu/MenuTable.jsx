@@ -2,7 +2,6 @@ import InputModal from "../../components/InputModal";
 import { AddFoodInputs } from "../../constants/inputs";
 import { useState } from "react";
 const MenuTable = () => {
-  const inputs = AddFoodInputs;
   const [editableCell, setEditableCell] = useState(null);
   const [products, setProducts] = useState([
     {
@@ -38,8 +37,6 @@ const MenuTable = () => {
   const handleFormSubmit = (formData) => {
     console.log("Form submitted with data:", formData);
   };
-
-  console.log("inputs", inputs);
 
   return (
     <>
@@ -127,14 +124,17 @@ const MenuTable = () => {
       <dialog id="addProductModal" className="modal">
         <div className="modal-box">
           <form method="dialog">
+            <span className="flex justify-center text-2xl font-bold">
+              Add Product
+            </span>
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => document.getElementById("my_modal_3").close()}
+              onClick={() => document.getElementById("addProductModal").close()}
             >
               ✕
             </button>
           </form>
-          <InputModal onSubmit={handleFormSubmit} inputs={inputs} />
+          <InputModal onSubmit={handleFormSubmit} inputs={AddFoodInputs} />
         </div>
       </dialog>
     </>

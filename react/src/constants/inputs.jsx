@@ -1,40 +1,41 @@
 export const FoodCategory = {
-    sides: "Sides",
-    entrees: "Entrees",
-    drink: "Drinks",
-    dessert: "Desserts",
-    breakfast: "Breakfast",
-}
+  sides: "Sides",
+  entrees: "Entrees",
+  drink: "Drinks",
+  dessert: "Desserts",
+  breakfast: "Breakfast",
+};
 
-export const AddFoodInputs = {
-    name: {
-        label: "Name",
-        value: "name",
-        type: "text",
-    },
-    image: {
-        label: "Image",
-        value: "image",
-        type: "text",
-    },
-    price: {
-        label: "Price",
-        value: "price",
-        type: "number",
-    },
-    stock: {
-        label: "Stock",
-        value: "stock",
-        type: "number",
-    },
-    category: {
-        label: "Category",
-        value: "category",
-        type: "text",
-    },
-    description: {
-        label: "Description",
-        value: "description",
-        type: "text",
-    },
-}
+export const AddFoodInputs = [
+  {
+    label: "Name",
+    value: "name",
+    type: "text",
+    required: "Required",
+  },
+  {
+    label: "Image",
+    value: "image",
+    required: "Required",
+  },
+  {
+    label: "Price",
+    value: "price",
+    required: "Required",
+  },
+  {
+    label: "Stock",
+    value: "stock",
+    required: "Required",
+  },
+  {
+    label: "Category",
+    value: "category",
+    required: "Required",
+  },
+  {
+    label: "Description",
+    value: "description",
+    required: "Required",
+  },
+];
