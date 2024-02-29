@@ -16,31 +16,37 @@ export const AddFoodInputs = [
   {
     label: "Image",
     value: "image",
+    type: "text",
     required: "Required",
   },
   {
     label: "Price",
     value: "price",
+    type: "number",
     required: "Required",
   },
   {
     label: "Stock",
     value: "stock",
+    type: "number",
     required: "Required",
   },
   {
     label: "Category",
     value: "category",
+    type: "text",
     required: "Required",
   },
   {
     label: "Description",
     value: "description",
+    type: "text",
     required: "Required",
   },
   {
     label: "Size",
     value: "size",
+    type: "text",
     required: "Required",
   }
 ];

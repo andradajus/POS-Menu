@@ -1,7 +1,7 @@
 import InputModal from "../../components/InputModal";
 import { AddFoodInputs } from "../../constants/inputs";
 import { useState, useEffect } from "react";
-import { getProducts } from "../../lib/firebaseutils"
+import { getProducts, addProducts } from "../../lib/firebaseutils"
 const MenuTable = () => {
   const [editableCell, setEditableCell] = useState(null);
   const [products, setProducts] = useState([])
@@ -27,13 +27,26 @@ const MenuTable = () => {
     setEditableCell(null);
   };
 
-  const handleFormSubmit = (formData) => {
-    console.log("Form submitted with data:", formData);
+  const handleFormSubmit = async(formData) => {
+    try {
+      const data = await addProducts(formData);
+      console.log("product data", data)
+    }
+    catch (error) {
+      console.error("Error adding product:", error);
+    }
   };
 
   useEffect(() => {
-    const data = getProducts()
-    setProducts(data)
+    const fetchData = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data)
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   console.log("products", products)
@@ -62,10 +75,10 @@ const MenuTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {products?.map((product, index) => (
+            {products?.map((product, index) => (
               <tr key={index}>
                 <th>
-                  <label>{product.id}</label>
+                  <label>{index + 1}</label>
                 </th>
                 <td>
                   {editableCell === index ? (
@@ -116,7 +129,7 @@ const MenuTable = () => {
                 <td>{product.price}</td>
                 <td>{product.stock}</td>
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       </div>
