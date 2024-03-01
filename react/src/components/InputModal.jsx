@@ -17,8 +17,8 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
     setFormData({});
   };
 
-  console.log("input modal", inputs);
-  console.log("select inputs on modal", selectInputs);
+  console.log("selectInputs", selectInputs);
+  console.log("inputs", inputs);
 
   return (
     <>
@@ -36,13 +36,13 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
                   className="select select-bordered w-full max-w-xs"
                   required={input.required === "Required"}
                 >
-                  <option value="" disabled hidden>
+                  <option value="" disabled selected>
                     Select an option
                   </option>
-                  {selectInputs && selectInputs.items ? (
-                    selectInputs.items.map((item) => (
+                  {selectInputs[input.label] && selectInputs[input.label].length > 0 ? (
+                    selectInputs[input.label].map((item) => (
                       <option key={item.value} value={item.value}>
-                        {item.label}
+                        {item.name}
                       </option>
                     ))
                   ) : (

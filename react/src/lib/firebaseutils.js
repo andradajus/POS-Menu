@@ -17,12 +17,20 @@ export const updateProducts = async (id, formData) => {
     };
 export const getCategories = async () => {
     const response = await getDocs(collection(db, "categories"))
-    return response
+    return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))
+}
+
+export const addCategories = async (formData) => {
+    await addDoc(collection(db, "categories"), formData)
 }
 
 export const getSizes = async () => {
     const response = await getDocs(collection(db, "sizes"))
-    return response
+    return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))
+}
+
+export const addSizes = async (formData) => {
+    await addDoc(collection(db, "sizes"), formData)
 }
 
 

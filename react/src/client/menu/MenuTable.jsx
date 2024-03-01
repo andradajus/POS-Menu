@@ -5,25 +5,32 @@ import {
   AddCategoryInputs,
 } from "../../constants/inputs";
 import { useState, useEffect } from "react";
-import { getProducts, addProducts } from "../../lib/firebaseutils";
+import { getProducts, addProducts, getSizes, addSizes, getCategories, addCategories } from "../../lib/firebaseutils";
 import { MenuTableItems } from "../../constants/datas";
-import { dummySelectInputs } from "../../constants/datas";
 const MenuTable = () => {
   const [products, setProducts] = useState([]);
+  const [sizes, setSizes] = useState("");
+  const [categories, setCategories] = useState([]);
   const [inputs, setInputs] = useState([]);
   const [selectInputs, setSelectInputs] = useState({});
+  const [selectInputs2, setSelectInputs2] = useState({});
+  const [handler, setHandler ] = useState("");
 
   const handleModal = (onClick) => {
     switch (onClick) {
       case "addProduct":
         setInputs(AddFoodInputs);
-        setSelectInputs(dummySelectInputs);
+        setSelectInputs(sizes);
+        setSelectInputs2(categories);
+        setHandler("products");
         break;
       case "addSizes":
         setInputs(AddSizeInputs);
+        setHandler("sizes");
         break;
       case "addCategory":
         setInputs(AddCategoryInputs);
+        setHandler("categories");
         break;
     }
     const modal = document.getElementById("modal");
@@ -34,8 +41,17 @@ const MenuTable = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      const data = await addProducts(formData);
-      console.log("product data", data);
+      let data;
+      if (handler === "products") {
+        data = await addProducts(formData);
+      }
+      if (handler === "sizes") {
+        data = await addSizes(formData);
+      }
+      if (handler === "categories") {
+        data = await addCategories(formData);
+      }
+      console.log("Transaction Successful", data);
       fetchProductData();
       document.getElementById("modal").close();
     } catch (error) {
@@ -44,8 +60,12 @@ const MenuTable = () => {
   };
   const fetchProductData = async () => {
     try {
-      const data = await getProducts();
-      setProducts(data);
+      const productData = await getProducts();
+      const sizesData = await getSizes();
+      const categoryData = await getCategories();
+      setProducts(productData);
+      setSizes(sizesData)
+      setCategories(categoryData)
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -56,6 +76,9 @@ const MenuTable = () => {
   }, []);
 
   console.log("products", products);
+  console.log("Menu Table Sizes", sizes)
+  console.log("sizes", sizes);
+  console.log("categories", categories);
 
   return (
     <>
@@ -141,7 +164,8 @@ const MenuTable = () => {
           <InputModal
             onSubmit={handleFormSubmit}
             inputs={inputs}
-            selectInputs={selectInputs}
+            selectInputs={{Size: selectInputs, Category: selectInputs2}}
+            // selectInputs2={selectInputs2}
           />
         </div>
       </dialog>

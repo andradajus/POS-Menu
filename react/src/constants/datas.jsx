@@ -37,14 +37,3 @@ export const MenuTableItems = [
     onClick: "addCategory",
   },
 ];
-
-/////////////////////DUMMY///////////////////
-export const dummySelectInputs = {
-  items: [
-    { value: "1", label: "Small", size: "12px" },
-    { value: "2", label: "Medium", size: "14px" },
-    { value: "3", label: "Large", size: "16px" },
-    { value: "4", label: "Extra Large", size: "18px" },
-  ],
-};
-/////////////////////DUMMY///////////////////

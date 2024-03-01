@@ -34,7 +34,7 @@ export const AddFoodInputs = [
   {
     label: "Category",
     value: "category",
-    type: "text",
+    type: "select",
     required: "Required",
   },
   {
@@ -54,7 +54,13 @@ export const AddFoodInputs = [
 export const AddSizeInputs = [
   {
     label: "Size",
-    value: "size",
+    value: "name",
+    type: "text",
+    required: "Required",
+  },
+  {
+    label: "Code",
+    value: "code",
     type: "text",
     required: "Required",
   },
@@ -63,7 +69,7 @@ export const AddSizeInputs = [
 export const AddCategoryInputs = [
   {
     label: "Category",
-    value: "category",
+    value: "name",
     type: "text",
     required: "Required",
   },
