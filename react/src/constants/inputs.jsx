@@ -8,7 +8,7 @@ export const FoodCategory = {
 
 export const AddFoodInputs = [
   {
-    label: "Name",
+    label: "Product",
     value: "name",
     type: "text",
     required: "Required",
@@ -46,9 +46,9 @@ export const AddFoodInputs = [
   {
     label: "Size",
     value: "size",
-    type: "text",
+    type: "select",
     required: "Required",
-  }
+  },
 ];
 
 export const AddSizeInputs = [
@@ -57,8 +57,8 @@ export const AddSizeInputs = [
     value: "size",
     type: "text",
     required: "Required",
-  }
-]
+  },
+];
 
 export const AddCategoryInputs = [
   {
@@ -66,5 +66,5 @@ export const AddCategoryInputs = [
     value: "category",
     type: "text",
     required: "Required",
-  }
-]
+  },
+];
