@@ -26,6 +26,12 @@ export const AddFoodInputs = [
     required: "Required",
   },
   {
+    label: "Price Increment",
+    value: "price_increment",
+    type: "number",
+    required: "Price Increment/Size",
+  },
+  {
     label: "Stock",
     value: "stock",
     type: "number",
@@ -41,12 +47,11 @@ export const AddFoodInputs = [
     label: "Description",
     value: "description",
     type: "text",
-    required: "Required",
   },
   {
     label: "Size",
     value: "size",
-    type: "select",
+    type: "checkbox",
     required: "Required",
   },
 ];

@@ -5,6 +5,3 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
-export const combineTwoArrays = (array1, array2) => {
-  return [...array1, ...array2];
-};

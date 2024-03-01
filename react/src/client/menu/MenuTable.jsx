@@ -123,11 +123,11 @@ const MenuTable = () => {
                   <div className="flex">
                     <div className="mask mask-squircle w-12 h-12">
                       <img
-                        src="/tailwind-css-component-profile-2@56w.png"
+                        src={product.image}
                         alt="IMG"
                       />
                     </div>
-                    {product.name}
+                    <span className="ml-1 mt-3">{product.name}</span>
                   </div>
                 </td>
                 <td>
@@ -165,7 +165,6 @@ const MenuTable = () => {
             onSubmit={handleFormSubmit}
             inputs={inputs}
             selectInputs={{Size: selectInputs, Category: selectInputs2}}
-            // selectInputs2={selectInputs2}
           />
         </div>
       </dialog>
