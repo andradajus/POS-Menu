@@ -29,9 +29,6 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
     setFormData({});
   };
 
-  console.log("selectInputs", selectInputs);
-  console.log("inputs", inputs);
-
   return (
     <>
       <div className="flex justify-center">
@@ -39,7 +36,7 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
           {inputs.map((input) => (
             <label key={input.value} className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">{input.label}</span>
+                <span className="label-text font-bold text-lg">{input.label}</span>
               </div>
               {input.type === "select" ? (
                 <select

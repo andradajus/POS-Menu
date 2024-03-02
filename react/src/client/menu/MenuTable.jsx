@@ -7,6 +7,7 @@ import {
 import { useState, useEffect } from "react";
 import { getProducts, addProducts, getSizes, addSizes, getCategories, addCategories } from "../../lib/firebaseutils";
 import { MenuTableItems } from "../../constants/datas";
+import ViewModal from "../../components/ViewModal";
 const MenuTable = () => {
   const [products, setProducts] = useState([]);
   const [sizes, setSizes] = useState("");
@@ -15,27 +16,51 @@ const MenuTable = () => {
   const [selectInputs, setSelectInputs] = useState({});
   const [selectInputs2, setSelectInputs2] = useState({});
   const [handler, setHandler ] = useState("");
+  const [productId, setProductId] = useState("");
 
   const handleModal = (onClick) => {
     switch (onClick) {
       case "addProduct":
+        console.log("Add Product")
         setInputs(AddFoodInputs);
         setSelectInputs(sizes);
         setSelectInputs2(categories);
         setHandler("products");
         break;
       case "addSizes":
+        console.log("Add Size")
         setInputs(AddSizeInputs);
         setHandler("sizes");
         break;
       case "addCategory":
+        console.log("Add Category")
         setInputs(AddCategoryInputs);
         setHandler("categories");
         break;
-    }
+      default:
+        console.log("Any");
+        setHandler("view");
+        setProductId(onClick);
+        setInputs(AddFoodInputs)
+        break;
+      }
+    console.log("onclick", onClick);
+    openModal()
+  };
+
+  const openModal = () => {
     const modal = document.getElementById("modal");
     if (modal) {
       modal.showModal();
+    }
+  }
+
+  const closeModal = () => {
+    const modalElement = document.getElementById("modal");
+    if (modalElement) {
+      setHandler("")
+      setInputs("")
+      modalElement.close();
     }
   };
 
@@ -79,7 +104,7 @@ const MenuTable = () => {
   console.log("Menu Table Sizes", sizes)
   console.log("sizes", sizes);
   console.log("categories", categories);
-
+  console.log("productid", productId)
   return (
     <>
       <div className="flex justify-center text-3xl font-bold m-2">
@@ -138,7 +163,13 @@ const MenuTable = () => {
                 <td>{product.stock}</td>
                 <td>
                   <div className="flex flex-col">
-                    <button className="btn btn-primary">View</button>
+                    <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      handleModal(product.id)}
+                    >
+                      View
+                    </button>
                     <butoon className="btn btn-error">Delete</butoon>
                   </div>
                 </td>
@@ -156,16 +187,29 @@ const MenuTable = () => {
             </span>
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => document.getElementById("modal").close()}
+              onClick={closeModal}
             >
               ✕
             </button>
           </form>
-          <InputModal
-            onSubmit={handleFormSubmit}
-            inputs={inputs}
-            selectInputs={{Size: selectInputs, Category: selectInputs2}}
-          />
+          {
+            handler === "products" || handler === "sizes" || handler === "categories" ?
+            (
+              <InputModal
+                onSubmit={handleFormSubmit}
+                inputs={inputs}
+                selectInputs={{Size: selectInputs, Category: selectInputs2}}
+              />
+            ) : (
+              <ViewModal
+                id={productId}
+                onSubmit={handleFormSubmit}
+                inputs={inputs}
+                setInputs={setInputs}
+                setSelectInputs={setSelectInputs}
+                selectInputs={{Size: selectInputs, Category: selectInputs2}} />
+            )
+          }
         </div>
       </dialog>
     </>

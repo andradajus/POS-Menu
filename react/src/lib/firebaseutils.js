@@ -6,6 +6,11 @@ export const getProducts = async () => {
     return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))
 };
 
+export const getProducyById = async (id) => {
+    const response = await getDocs(collection(db, "products"))
+    return response.docs.map((doc) => ({...doc.data(), id: doc.id,})).find(product => product.id === id)
+}
+
 export const addProducts = async (formData) => {
     await addDoc(collection(db, "products"), formData)
 }
