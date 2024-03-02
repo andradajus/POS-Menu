@@ -25,7 +25,7 @@ const MenuTable = () => {
         setInputs(AddFoodInputs);
         setSelectInputs(sizes);
         setSelectInputs2(categories);
-        setHandler("addProducts");
+        setHandler("addProduct");
         break;
       case "addSizes":
         console.log("Add Size")
@@ -64,10 +64,10 @@ const MenuTable = () => {
     }
   };
 
-  const handleFormSubmit = async (id, formData) => {
+  const handleFormSubmit = async (formData, productId) => {
     try {
       let data;
-      if (handler === "addProducts") {
+      if (handler === "addProduct") {
         data = await addProducts(formData);
       }
       if (handler === "addSizes") {
@@ -77,11 +77,10 @@ const MenuTable = () => {
         data = await addCategories(formData);
       }
       if (handler === "updateProduct") {
-        data = await updateProduct(id, formData);
+        data = await updateProduct(formData, productId);
       }
       if (handler === "deleteProduct") {
-        data = await deleteProduct(id);
-        console.log("Delete")
+        data = await deleteProduct(productId);
       }
       console.log("Transaction Successful", data);
       fetchProductData();
@@ -107,11 +106,6 @@ const MenuTable = () => {
     fetchProductData();
   }, []);
 
-  console.log("products", products);
-  console.log("Menu Table Sizes", sizes)
-  console.log("sizes", sizes);
-  console.log("categories", categories);
-  console.log("productid", productId)
   return (
     <>
       <div className="flex justify-center text-3xl font-bold m-2">
@@ -132,7 +126,7 @@ const MenuTable = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-auto">
         <table className="table">
           <thead>
             <tr>
@@ -159,11 +153,15 @@ const MenuTable = () => {
                         alt="IMG"
                       />
                     </div>
-                    <span className="ml-1 mt-3">{product.name}</span>
+                    <div className="flex justify-between ml-1">
+                      <span></span>
+                      <span className="ml-1 mt">{product.name}</span>
+                      <span></span>
+                    </div>
                   </div>
                 </td>
                 <td>
-                  <div className="font-bold">{product.description}</div>
+                  <div className="font-bold text-xs">{product.description}</div>
                 </td>
                 <td>{product.category}</td>
                 <td>{product.price}</td>
@@ -181,8 +179,7 @@ const MenuTable = () => {
                       className="btn btn-error"
                       onClick={() => {
                         setHandler("deleteProduct");
-                        handleFormSubmit(product.id);
-                        console.log("delete here", product.id)
+                        handleFormSubmit(null, product.id);
                       }}
                     >
                     Delete
@@ -206,7 +203,7 @@ const MenuTable = () => {
             </button>
           </form>
           {
-            handler === "addProducts" || handler === "addSizes" || handler === "addCategories" ?
+            handler === "addProduct" || handler === "addSizes" || handler === "addCategories" ?
             (
               <InputModal
                 onSubmit={handleFormSubmit}
@@ -220,7 +217,8 @@ const MenuTable = () => {
                 inputs={inputs}
                 setInputs={setInputs}
                 setSelectInputs={setSelectInputs}
-                selectInputs={{Size: selectInputs, Category: selectInputs2}} />
+                selectInputs={{Size: selectInputs, Category: selectInputs2}}
+                />
             )
           }
         </div>
