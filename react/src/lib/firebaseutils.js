@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, updateDoc, doc } from "firebase/firestore"
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore"
 import { db } from "../firebase-config"
 
 export const getProducts = async () => {
@@ -15,11 +15,17 @@ export const addProducts = async (formData) => {
     await addDoc(collection(db, "products"), formData)
 }
 
-export const updateProducts = async (id, formData) => {
-    const productRef = doc(db, "products", id);
-    console.log("Update Products", formData)
-    await updateDoc(productRef, formData);
-    };
+export const updateProduct = async (id, formData) => {
+    const productRef = doc(db, "products", id)
+    await updateDoc(productRef, formData)
+    console.log("product updated")
+};
+
+export const deleteProduct = async (id) => {
+    const productRef = doc(db, "products", id)
+    await deleteDoc(productRef)
+    console.log("product deleted")
+}
 export const getCategories = async () => {
     const response = await getDocs(collection(db, "categories"))
     return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))

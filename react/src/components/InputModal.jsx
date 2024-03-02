@@ -31,6 +31,9 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
 
   return (
     <>
+      <span className="flex justify-center text-2xl font-bold">
+                {inputs.length > 0 ? `Add ${inputs[0].label}` : ""}
+      </span>
       <div className="flex justify-center">
         <form onSubmit={handleSubmit}>
           {inputs.map((input) => (
@@ -100,6 +103,7 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
                   onChange={(e) => handleChange(input.value, e.target.value)}
                   className="input input-bordered w-full max-w-xs"
                   required={input.required === "Required"}
+                  disabled={input.disabled === "Disabled"}
                 />
               )}
               <div className="label">

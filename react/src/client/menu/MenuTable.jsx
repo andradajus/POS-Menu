@@ -5,7 +5,7 @@ import {
   AddCategoryInputs,
 } from "../../constants/inputs";
 import { useState, useEffect } from "react";
-import { getProducts, addProducts, getSizes, addSizes, getCategories, addCategories } from "../../lib/firebaseutils";
+import { getProducts, addProducts, updateProduct, getSizes, addSizes, getCategories, addCategories, deleteProduct} from "../../lib/firebaseutils";
 import { MenuTableItems } from "../../constants/datas";
 import ViewModal from "../../components/ViewModal";
 const MenuTable = () => {
@@ -25,21 +25,21 @@ const MenuTable = () => {
         setInputs(AddFoodInputs);
         setSelectInputs(sizes);
         setSelectInputs2(categories);
-        setHandler("products");
+        setHandler("addProducts");
         break;
       case "addSizes":
         console.log("Add Size")
         setInputs(AddSizeInputs);
-        setHandler("sizes");
+        setHandler("addSizes");
         break;
       case "addCategory":
         console.log("Add Category")
         setInputs(AddCategoryInputs);
-        setHandler("categories");
+        setHandler("addCategories");
         break;
       default:
         console.log("Any");
-        setHandler("view");
+        setHandler("updateProduct");
         setProductId(onClick);
         setInputs(AddFoodInputs)
         break;
@@ -64,17 +64,24 @@ const MenuTable = () => {
     }
   };
 
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = async (id, formData) => {
     try {
       let data;
-      if (handler === "products") {
+      if (handler === "addProducts") {
         data = await addProducts(formData);
       }
-      if (handler === "sizes") {
+      if (handler === "addSizes") {
         data = await addSizes(formData);
       }
-      if (handler === "categories") {
+      if (handler === "addCategories") {
         data = await addCategories(formData);
+      }
+      if (handler === "updateProduct") {
+        data = await updateProduct(id, formData);
+      }
+      if (handler === "deleteProduct") {
+        data = await deleteProduct(id);
+        console.log("Delete")
       }
       console.log("Transaction Successful", data);
       fetchProductData();
@@ -170,7 +177,16 @@ const MenuTable = () => {
                     >
                       View
                     </button>
-                    <butoon className="btn btn-error">Delete</butoon>
+                    <button
+                      className="btn btn-error"
+                      onClick={() => {
+                        setHandler("deleteProduct");
+                        handleFormSubmit(product.id);
+                        console.log("delete here", product.id)
+                      }}
+                    >
+                    Delete
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -182,9 +198,6 @@ const MenuTable = () => {
       <dialog id="modal" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <span className="flex justify-center text-2xl font-bold">
-              {inputs.length > 0 ? `Add ${inputs[0].label}` : ""}
-            </span>
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={closeModal}
@@ -193,7 +206,7 @@ const MenuTable = () => {
             </button>
           </form>
           {
-            handler === "products" || handler === "sizes" || handler === "categories" ?
+            handler === "addProducts" || handler === "addSizes" || handler === "addCategories" ?
             (
               <InputModal
                 onSubmit={handleFormSubmit}

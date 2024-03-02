@@ -14,6 +14,12 @@ export const AddFoodInputs = [
     required: "Required",
   },
   {
+    label: "ID",
+    value: "id",
+    type: "text",
+    disabled: "Disabled",
+  },
+  {
     label: "Image",
     value: "image",
     type: "text",

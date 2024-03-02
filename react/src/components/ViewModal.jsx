@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { getProducyById } from "../lib/firebaseutils";
 import { useEffect, useState } from "react"
-const ViewModal = ({selectInputs, inputs, onSubmit, id}) => {
+const ViewModal = ({selectInputs, inputs, setInputs, onSubmit, id}) => {
     const [formData, setFormData] = useState({});
     const handleChange = (name, value) => {
         setFormData((prevData) => ({
@@ -12,10 +12,10 @@ const ViewModal = ({selectInputs, inputs, onSubmit, id}) => {
 
     const handleCheckboxChange = (name, value) => {
         setFormData((prevData) => {
-        if (!prevData[name]) {
+            if (!prevData[name]) {
             return { ...prevData, [name]: [value] };
-        }
-        const updatedArray = prevData[name].includes(value)
+            }
+            const updatedArray = prevData[name].includes(value)
             ? prevData[name].filter((item) => item !== value)
             : [...prevData[name], value];
         return { ...prevData, [name]: updatedArray };
@@ -24,15 +24,17 @@ const ViewModal = ({selectInputs, inputs, onSubmit, id}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit(id, formData);
         console.log("Form submitted Modal:", formData);
         setFormData({});
     };
 
-    const viewHandler = (id) => {
+    const viewHandler = async (id) => {
         try {
-            const data = getProducyById(id);
-            console.log("getProductById", data);
+            const data = await getProducyById(id);
+            setInputs((prevInputs) => [data, ...prevInputs]);
+            setFormData(data)
+            console.log("productdata", data);
         } catch (error) {
             console.log("error", error);
         }
@@ -40,7 +42,7 @@ const ViewModal = ({selectInputs, inputs, onSubmit, id}) => {
 
     useEffect(() => {
         viewHandler(id)
-    })
+    }, [id])
 
     console.log("view modal", inputs)
 return (
@@ -114,6 +116,7 @@ return (
                         onChange={(e) => handleChange(input.value, e.target.value)}
                         className="input input-bordered w-full max-w-xs"
                         required={input.required === "Required"}
+                        disabled={input.disabled === "Disabled"}
                     />
                     )}
                     <div className="label">
