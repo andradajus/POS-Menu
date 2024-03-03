@@ -13,12 +13,12 @@ const ViewModal = ({selectInputs, inputs, setInputs, onSubmit, id}) => {
     const handleCheckboxChange = (name, value) => {
         setFormData((prevData) => {
             if (!prevData[name]) {
-            return { ...prevData, [name]: [value] };
+                return { ...prevData, [name]: [{ [name]: value }] };
             }
-            const updatedArray = prevData[name].includes(value)
-            ? prevData[name].filter((item) => item !== value)
-            : [...prevData[name], value];
-        return { ...prevData, [name]: updatedArray };
+            const updatedArray = prevData[name].some((checkboxItem) => checkboxItem[name] === value)
+                ? prevData[name].filter((checkboxItem) => checkboxItem[name] !== value)
+                : [...prevData[name], { [name]: value }];
+            return { ...prevData, [name]: updatedArray };
         });
     };
 
@@ -90,18 +90,19 @@ return (
                                     />
                                 </label>
 
-                                {selectInputs[input?.label].map((item) => (
-                                    <div key={item.value}>
+                                {selectInputs[input.label].map((item) => (
+                                <div key={item.value}>
+                                    {console.log("Item:", item)}
                                     <label className="label cursor-pointer">
                                         <span className="label-text">{item.name}</span>
                                         <input
                                         type="checkbox"
-                                        checked={formData[input?.value]?.includes(item.name) || false}
-                                        onChange={() => handleCheckboxChange(input?.value, item.name)}
+                                        value={formData[input.value]?.includes(item.name) || false}
+                                        onChange={() => handleCheckboxChange(input.value, item.name)}
                                         className="checkbox"
                                         />
                                     </label>
-                                    </div>
+                                </div>
                                 ))}
                                 </>
                             ) : (

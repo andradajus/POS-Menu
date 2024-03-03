@@ -12,15 +12,15 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
 
   const handleCheckboxChange = (name, value) => {
     setFormData((prevData) => {
-      if (!prevData[name]) {
-        return { ...prevData, [name]: [value] };
-      }
-      const updatedArray = prevData[name].includes(value)
-        ? prevData[name].filter((item) => item !== value)
-        : [...prevData[name], value];
-      return { ...prevData, [name]: updatedArray };
+        if (!prevData[name]) {
+            return { ...prevData, [name]: [{ [name]: value }] };
+        }
+        const updatedArray = prevData[name].some((checkboxItem) => checkboxItem[name] === value)
+            ? prevData[name].filter((checkboxItem) => checkboxItem[name] !== value)
+            : [...prevData[name], { [name]: value }];
+        return { ...prevData, [name]: updatedArray };
     });
-  };
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
