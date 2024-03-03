@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { getProducts, addProducts, updateProduct, getSizes, addSizes, getCategories, addCategories, deleteProduct} from "../../lib/firebaseutils";
 import { MenuTableItems } from "../../constants/datas";
 import ViewModal from "../../components/ViewModal";
+import { AddIcon, DeleteIcon, ViewIcon } from "../../assets/icons"
 const MenuTable = () => {
   const [products, setProducts] = useState([]);
   const [sizes, setSizes] = useState("");
@@ -112,19 +113,19 @@ const MenuTable = () => {
         Product Table
       </div>
       <div className="flex">
-        <div>
           {MenuTableItems.map((item, index) => (
-            <div key={index} className="join">
+            <div key={index} >
+
               <button
-                className="btn btn-primary join-item m-1"
+                className="btn btn-primary m-1"
                 onClick={() => handleModal(item.onClick)}
               >
+              <AddIcon />
                 {item.label}
               </button>
             </div>
           ))}
         </div>
-      </div>
 
       <div className="overflow-auto">
         <table className="table">
@@ -136,6 +137,7 @@ const MenuTable = () => {
               <th>Category</th>
               <th>Price</th>
               <th>Stock</th>
+              <th>Sizes</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -153,9 +155,9 @@ const MenuTable = () => {
                         alt="IMG"
                       />
                     </div>
-                    <div className="flex justify-between ml-1">
+                    <div className="flex flex-col justify-around ml-1">
                       <span></span>
-                      <span className="ml-1 mt">{product.name}</span>
+                      <span className="ml-1">{product.name}</span>
                       <span></span>
                     </div>
                   </div>
@@ -167,12 +169,20 @@ const MenuTable = () => {
                 <td>{product.price}</td>
                 <td>{product.stock}</td>
                 <td>
+                {product.size.map((data) => (
+                  <div  key={data.id} className="flex-col">
+                    <div>{data.size}</div>
+                  </div>
+                ))}
+                </td>
+                <td>
                   <div className="flex flex-col">
                     <button
                     className="btn btn-primary"
                     onClick={() =>
                       handleModal(product.id)}
                     >
+                    <ViewIcon />
                       View
                     </button>
                     <button
@@ -182,6 +192,7 @@ const MenuTable = () => {
                         handleFormSubmit(null, product.id);
                       }}
                     >
+                    <DeleteIcon />
                     Delete
                     </button>
                   </div>
