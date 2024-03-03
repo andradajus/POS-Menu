@@ -1,10 +1,10 @@
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore"
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore"
 import { db } from "../firebase-config"
 
 export const logTransaction = async (method, product) => {
     await addDoc(collection(db, "transactions"),
     {
-        date: new Date(),
+        date: serverTimestamp(),
         description: `${method} ${product}`,
     })
 }
