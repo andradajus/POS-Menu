@@ -18,9 +18,7 @@ export const CompanyDetails = {
 };
 
 export const NavbarItems = {
-  home: { label: "Home", route: "/Home" },
   menu: { label: "Menu", route: "/Menu" },
-  pos: { label: "POS", route: "/POS" },
 };
 
 export const MenuTableItems = [

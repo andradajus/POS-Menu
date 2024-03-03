@@ -81,7 +81,7 @@ const MenuTable = () => {
         data = await updateProduct(formData, productId);
       }
       if (handler === "deleteProduct") {
-        data = await deleteProduct(productId);
+        data = await deleteProduct(formData, productId);
       }
       console.log("Transaction Successful", data);
       fetchProductData();
@@ -112,7 +112,7 @@ const MenuTable = () => {
       <div className="flex justify-center text-3xl font-bold m-2">
         Product Table
       </div>
-      <div className="flex">
+      <div className="flex max-h-32 overflow-auto">
           {MenuTableItems.map((item, index) => (
             <div key={index} >
 
@@ -127,7 +127,7 @@ const MenuTable = () => {
           ))}
         </div>
 
-      <div className="overflow-auto">
+      <div className="overflow-x-auto h-screen">
         <table className="table">
           <thead>
             <tr>
@@ -149,15 +149,15 @@ const MenuTable = () => {
                 </th>
                 <td>
                   <div className="flex">
-                    <div className="mask mask-squircle w-12 h-12">
+                    <div className="mask mask-squircle w-28">
                       <img
                         src={product.image}
-                        alt="IMG"
+                        alt={product.name}
                       />
                     </div>
                     <div className="flex flex-col justify-around ml-1">
                       <span></span>
-                      <span className="ml-1">{product.name}</span>
+                      <span className="ml-1 text-xl font-semibold">{product.name}</span>
                       <span></span>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ const MenuTable = () => {
                       className="btn btn-error"
                       onClick={() => {
                         setHandler("deleteProduct");
-                        handleFormSubmit(null, product.id);
+                        handleFormSubmit(product.name, product.id);
                       }}
                     >
                     <DeleteIcon />

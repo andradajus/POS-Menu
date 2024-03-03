@@ -1,6 +1,13 @@
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore"
 import { db } from "../firebase-config"
 
+export const logTransaction = async (method, product) => {
+    await addDoc(collection(db, "transactions"),
+    {
+        date: new Date(),
+        description: `${method} ${product}`,
+    })
+}
 export const getProducts = async () => {
     const response = await getDocs(collection(db, "products"))
     return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))
@@ -13,18 +20,19 @@ export const getProducyById = async (id) => {
 
 export const addProducts = async (formData) => {
     await addDoc(collection(db, "products"), formData)
+    await logTransaction("Added", formData.name)
 }
 
 export const updateProduct = async (id, formData) => {
     const productRef = doc(db, "products", id)
     await updateDoc(productRef, formData)
-    console.log("product updated")
+    await logTransaction("Updated", formData.name)
 };
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (name, id) => {
     const productRef = doc(db, "products", id)
     await deleteDoc(productRef)
-    console.log("product deleted")
+    await logTransaction("Deleted", name)
 }
 export const getCategories = async () => {
     const response = await getDocs(collection(db, "categories"))
@@ -33,6 +41,7 @@ export const getCategories = async () => {
 
 export const addCategories = async (formData) => {
     await addDoc(collection(db, "categories"), formData)
+    await logTransaction("Added category", formData.name)
 }
 
 export const getSizes = async () => {
@@ -42,6 +51,10 @@ export const getSizes = async () => {
 
 export const addSizes = async (formData) => {
     await addDoc(collection(db, "sizes"), formData)
+    await logTransaction("Added size", formData.name)
 }
 
-
+export const getTransactions = async () => {
+    const response = await getDocs(collection(db, "transactions"))
+    return response.docs.map((doc) => ({...doc.data(), id: doc.id,}))
+}
