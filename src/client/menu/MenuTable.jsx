@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import InputModal from "../../components/InputModal";
 import {
   AddFoodInputs,
@@ -6,10 +7,12 @@ import {
 } from "../../constants/inputs";
 import { useState, useEffect } from "react";
 import { getProducts, addProducts, updateProduct, getSizes, addSizes, getCategories, addCategories, deleteProduct} from "../../lib/firebaseutils";
-import { MenuTableItems } from "../../constants/datas";
+import { MenuTableItems, MenuHeaderItems } from "../../constants/datas";
 import ViewModal from "../../components/ViewModal";
-import { AddIcon, DeleteIcon, ViewIcon } from "../../assets/icons"
-const MenuTable = () => {
+import { AddIcon, AscendingIcon, DescendingIcon, DeleteIcon, ViewIcon } from "../../assets/icons"
+import { sortProducts } from "../../lib/utils";
+import numeral from "numeral";
+const MenuTable = ({setTransactionFlag, transactionFlag}) => {
   const [products, setProducts] = useState([]);
   const [sizes, setSizes] = useState("");
   const [categories, setCategories] = useState([]);
@@ -86,6 +89,7 @@ const MenuTable = () => {
       console.log("Transaction Successful", data);
       fetchProductData();
       document.getElementById("modal").close();
+      setTransactionFlag(true)
     } catch (error) {
       console.error("Error adding product:", error);
     }
@@ -103,9 +107,14 @@ const MenuTable = () => {
     }
   };
 
+  const handleSort = (sortByField, sortOrder) => {
+    const sortedProducts = sortProducts(products, sortByField, sortOrder);
+    setProducts(sortedProducts);
+  };
+
   useEffect(() => {
     fetchProductData();
-  }, []);
+  }, [transactionFlag]);
 
   return (
     <>
@@ -131,14 +140,30 @@ const MenuTable = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Sizes</th>
-              <th>Actions</th>
+              {MenuHeaderItems.map((item, index) => (
+                <th key={index}>
+                  <div className="flex justify-between">
+                    <div>
+                      {item.label}
+                    </div>
+                    <div className="flex">
+                      {(item.onClickAsc && item.onClickDesc) && (
+                        <>
+                          <AscendingIcon
+                            className="cursor-pointer hover:opacity-50 w-5 h-5"
+                            onClick={() => handleSort(item.field, 'asc')}
+                          />
+
+                          <DescendingIcon
+                            className="cursor-pointer hover:opacity-50 w-5 h-5"
+                            onClick={() => handleSort(item.field, 'desc')}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -166,7 +191,7 @@ const MenuTable = () => {
                   <div className="font-bold text-xs">{product.description}</div>
                 </td>
                 <td>{product.category}</td>
-                <td>{product.price}</td>
+                <td>₱ {numeral(product.price).format('0,0.00')}</td>
                 <td>{product.stock}</td>
                 <td>
                 {product.size.map((data) => (

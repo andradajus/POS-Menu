@@ -1,5 +1,5 @@
 export const CompanyDetails = {
-  name: "Brain Bistro",
+  name: "Simple CRUD Table",
   description1:
     "Step into the culinary realm of Brain Bistro, where gastronomy meets genius. Our menu is a symphony of flavors designed to stimulate your taste buds and challenge your culinary perceptions. Immerse yourself in a dining experience that celebrates innovation and creativity. From inventive appetizers to thoughtfully crafted main courses, every dish is a masterpiece. At Brain Bistro, we believe that great food is a feast for both the mind and the senses. Come dine with us and embark on a culinary journey that promises to tantalize your taste buds and spark your imagination.",
   tagline1: "Savor the Intellect, Delight the Palate",
@@ -33,5 +33,44 @@ export const MenuTableItems = [
   {
     label: "Add Category",
     onClick: "addCategory",
+  },
+];
+
+export const MenuHeaderItems = [
+  {
+    label: "ID",
+    field: "id",
+  },
+  {
+    label: "Name",
+    field: "name",
+    onClickAsc: true,
+    onClickDesc: true,
+  },
+  {
+    label: "Description",
+    field: "description",
+    onClickAsc: true,
+    onClickDesc: true,
+  },
+  {
+    label: "Category",
+    field: "category",
+    onClickAsc: true,
+    onClickDesc: true,
+  },
+  {
+    label: "Price",
+    field: "price",
+  },
+  {
+    label: "Stock",
+    field: "stock",
+  },
+  {
+    label: "Sizes",
+  },
+  {
+    label: "Actions",
   },
 ];

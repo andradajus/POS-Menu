@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 import { getTransactions } from "../../lib/firebaseutils"
 import { useEffect, useState } from "react"
 import { format } from 'date-fns'
+import { sortDates } from "../../lib/utils"
 
-const MenuLogs = () => {
+const MenuLogs = ({transactionFlag, setTransactionFlag}) => {
     const [transactions, setTransactions] = useState([])
+    const sortedTransactions = transactions.slice().sort(sortDates);
 
     const fetchTransactionData = async () => {
         try {
@@ -16,7 +19,8 @@ const MenuLogs = () => {
 
     useEffect(() => {
         fetchTransactionData()
-    }, [])
+        setTransactionFlag(false)
+    }, [transactionFlag])
 
     console.log("transactionssssss", transactions)
     return (
@@ -32,8 +36,8 @@ const MenuLogs = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {transactions && transactions.map((transaction, index) => {
-                    const dateObject = transaction.date.toDate();
+                {sortedTransactions && sortedTransactions.map((transaction, index) => {
+                    const dateObject = transaction.date?.toDate();
 
                     return (
                         <tr key={transaction.id}>
