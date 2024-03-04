@@ -26,10 +26,8 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
     switch (onClick) {
       case "addProduct":
         console.log("Add Product")
-        setInputs(AddFoodInputs);
-        setSelectInputs(sizes);
-        setSelectInputs2(categories);
         setHandler("addProduct");
+        callData()
         break;
       case "addSizes":
         console.log("Add Size")
@@ -42,15 +40,20 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
         setHandler("addCategories");
         break;
       default:
-        console.log("Any");
         setHandler("updateProduct");
         setProductId(onClick);
-        setInputs(AddFoodInputs)
+        callData()
         break;
       }
     console.log("onclick", onClick);
     openModal()
   };
+
+  const callData = () => {
+    setInputs(AddFoodInputs)
+    setSelectInputs(sizes);
+    setSelectInputs2(categories);
+  }
 
   const openModal = () => {
     const modal = document.getElementById("modal");
@@ -102,6 +105,8 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
       setProducts(productData);
       setSizes(sizesData)
       setCategories(categoryData)
+      if (productId)
+        setProductId("")
     } catch (error) {
       console.error("Error fetching products:", error);
     }

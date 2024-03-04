@@ -5,7 +5,7 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
-export const sortDates = (a, b) => new Date(a.date.toDate()) - new Date(b.date.toDate());
+export const sortDates = (a, b) => new Date(b.date.toDate() - new Date(a.date.toDate()));
 
 export const sortProducts = (products, sortByField, sortOrder) => {
   const sortedProducts = [...products].sort((a, b) => {
