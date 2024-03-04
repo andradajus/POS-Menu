@@ -44,6 +44,9 @@ const ViewModal = ({selectInputs, inputs, setInputs, onSubmit, id}) => {
         viewHandler(id)
     }, [id])
 
+
+    console.log("Formdata", formData)
+
 return (
         <>
             <div className="flex justify-center">
@@ -84,7 +87,7 @@ return (
                                     <span className="label-text">N/A</span>
                                     <input
                                     type="checkbox"
-                                    checked={formData[input?.value]?.includes("N/A") || false}
+                                    checked={formData[input?.value]?.some(item => item.size === "N/A") || false}
                                     onChange={() => handleCheckboxChange(input?.value, "N/A")}
                                     className="checkbox"
                                     />
@@ -97,7 +100,7 @@ return (
                                         <span className="label-text">{item.name}</span>
                                         <input
                                         type="checkbox"
-                                        value={formData[input.value]?.includes(item.name) || false}
+                                        checked={formData[input?.value]?.some(selectedSize => selectedSize.size === item.name) || false}
                                         onChange={() => handleCheckboxChange(input.value, item.name)}
                                         className="checkbox"
                                         />

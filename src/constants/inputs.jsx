@@ -35,7 +35,6 @@ export const AddFoodInputs = [
     label: "Price Increment",
     value: "price_increment",
     type: "number",
-    required: "Price Increment/Size",
   },
   {
     label: "Stock",
