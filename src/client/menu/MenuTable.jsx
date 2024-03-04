@@ -212,8 +212,8 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
                     </button>
                     <button
                       className="btn btn-error"
+                      onFocus={() => setHandler("deleteProduct")}
                       onClick={() => {
-                        setHandler("deleteProduct");
                         handleFormSubmit(product.name, product.id);
                       }}
                     >
