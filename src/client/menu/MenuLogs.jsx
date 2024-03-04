@@ -24,7 +24,7 @@ const MenuLogs = ({transactionFlag, setTransactionFlag}) => {
 
     return (
     <>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto h-screen m-5">
             <span className="flex justify-center text-2xl m-1 font-bold">Transaction Logs</span>
             <table className="table">
                 <thead>

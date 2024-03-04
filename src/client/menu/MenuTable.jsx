@@ -12,7 +12,7 @@ import ViewModal from "../../components/ViewModal";
 import { AddIcon, AscendingIcon, DescendingIcon, DeleteIcon, ViewIcon } from "../../assets/icons"
 import { sortProducts } from "../../lib/utils";
 import numeral from "numeral";
-const MenuTable = ({setTransactionFlag, transactionFlag}) => {
+const MenuTable = ({setTransactionFlag, transactionFlag, addAlert}) => {
   const [products, setProducts] = useState([]);
   const [sizes, setSizes] = useState("");
   const [categories, setCategories] = useState([]);
@@ -71,18 +71,23 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
     try {
       if (handler === "addProduct") {
         await addProducts(formData);
+        addAlert("success", "Product added successfully");
       }
       if (handler === "addSizes") {
         await addSizes(formData);
+        addAlert("success", "Size added successfully");
       }
       if (handler === "addCategories") {
         await addCategories(formData);
+        addAlert("success", "Category added successfully");
       }
       if (handler === "updateProduct") {
         await updateProduct(formData, productId);
+        addAlert("success", "Product updated successfully");
       }
       if (handler === "deleteProduct") {
         await deleteProduct(formData, productId);
+        addAlert("success", "Product deleted successfully");
       }
       fetchProductData();
       document.getElementById("modal").close();
