@@ -22,7 +22,6 @@ const MenuLogs = ({transactionFlag, setTransactionFlag}) => {
         setTransactionFlag(false)
     }, [transactionFlag])
 
-    console.log("transactionssssss", transactions)
     return (
     <>
         <div className="overflow-x-auto">

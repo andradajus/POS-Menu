@@ -25,7 +25,6 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    console.log("Form submitted Modal:", formData);
     setFormData({});
   };
 
@@ -79,7 +78,6 @@ const InputModal = ({ selectInputs, inputs, onSubmit }) => {
 
                       {selectInputs[input.label].map((item) => (
                         <div key={item.value}>
-                          {console.log("Item:", item)}
                           <label className="label cursor-pointer">
                             <span className="label-text">{item.name}</span>
                             <input

@@ -33,7 +33,6 @@ const ViewModal = ({selectInputs, inputs, setInputs, onSubmit, id}) => {
             const data = await getProducyById(id);
             setInputs((prevInputs) => [data, ...prevInputs]);
             setFormData(data)
-            console.log("productdata", data);
         } catch (error) {
             console.log("error", error);
         }
@@ -44,8 +43,6 @@ const ViewModal = ({selectInputs, inputs, setInputs, onSubmit, id}) => {
         viewHandler(id)
     }, [id])
 
-
-    console.log("Formdata", formData)
 
 return (
         <>
@@ -95,7 +92,6 @@ return (
 
                                 {selectInputs[input.label].map((item) => (
                                 <div key={item.value}>
-                                    {console.log("Item:", item)}
                                     <label className="label cursor-pointer">
                                         <span className="label-text">{item.name}</span>
                                         <input

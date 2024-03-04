@@ -25,17 +25,14 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
   const handleModal = (onClick) => {
     switch (onClick) {
       case "addProduct":
-        console.log("Add Product")
         setHandler("addProduct");
         callData()
         break;
       case "addSizes":
-        console.log("Add Size")
         setInputs(AddSizeInputs);
         setHandler("addSizes");
         break;
       case "addCategory":
-        console.log("Add Category")
         setInputs(AddCategoryInputs);
         setHandler("addCategories");
         break;
@@ -45,7 +42,6 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
         callData()
         break;
       }
-    console.log("onclick", onClick);
     openModal()
   };
 
@@ -73,23 +69,21 @@ const MenuTable = ({setTransactionFlag, transactionFlag}) => {
 
   const handleFormSubmit = async (formData, productId) => {
     try {
-      let data;
       if (handler === "addProduct") {
-        data = await addProducts(formData);
+        await addProducts(formData);
       }
       if (handler === "addSizes") {
-        data = await addSizes(formData);
+        await addSizes(formData);
       }
       if (handler === "addCategories") {
-        data = await addCategories(formData);
+        await addCategories(formData);
       }
       if (handler === "updateProduct") {
-        data = await updateProduct(formData, productId);
+        await updateProduct(formData, productId);
       }
       if (handler === "deleteProduct") {
-        data = await deleteProduct(formData, productId);
+        await deleteProduct(formData, productId);
       }
-      console.log("Transaction Successful", data);
       fetchProductData();
       document.getElementById("modal").close();
       setTransactionFlag(true)
